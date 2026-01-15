@@ -1,0 +1,31 @@
+# ============================================
+# Docker Compose - Production (Supabase)
+# ============================================
+# Supabase를 외부 DB로 사용하는 프로덕션 환경
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: logindemo-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=${DATABASE_URL}
+      - DIRECT_URL=${DIRECT_URL}
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

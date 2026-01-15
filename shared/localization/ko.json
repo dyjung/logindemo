@@ -1,0 +1,61 @@
+{
+  "common": {
+    "ok": "확인",
+    "cancel": "취소",
+    "save": "저장",
+    "delete": "삭제",
+    "edit": "편집",
+    "close": "닫기",
+    "back": "뒤로",
+    "next": "다음",
+    "done": "완료",
+    "loading": "로딩 중...",
+    "error": "오류",
+    "retry": "다시 시도"
+  },
+  "auth": {
+    "login": "로그인",
+    "logout": "로그아웃",
+    "register": "회원가입",
+    "email": "이메일",
+    "password": "비밀번호",
+    "confirmPassword": "비밀번호 확인",
+    "name": "이름",
+    "forgotPassword": "비밀번호 찾기",
+    "autoLogin": "자동 로그인",
+    "socialLogin": {
+      "kakao": "카카오로 로그인",
+      "naver": "네이버로 로그인",
+      "apple": "Apple로 로그인"
+    },
+    "errors": {
+      "invalidEmail": "올바른 이메일 형식이 아닙니다",
+      "invalidPassword": "비밀번호는 8자 이상이어야 합니다",
+      "passwordMismatch": "비밀번호가 일치하지 않습니다",
+      "emailExists": "이미 사용 중인 이메일입니다",
+      "invalidCredentials": "이메일 또는 비밀번호가 올바르지 않습니다"
+    },
+    "terms": {
+      "agreeAll": "전체 동의",
+      "termsOfService": "이용약관 동의",
+      "privacyPolicy": "개인정보처리방침 동의"
+    }
+  },
+  "onboarding": {
+    "skip": "건너뛰기",
+    "getStarted": "시작하기",
+    "page1": {
+      "title": "환영합니다",
+      "description": "앱을 시작해보세요"
+    }
+  },
+  "main": {
+    "tabs": {
+      "explore": "탐색",
+      "search": "검색",
+      "saved": "저장",
+      "notifications": "알림",
+      "profile": "프로필"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "done": "Done",
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry"
+  },
+  "auth": {
+    "login": "Log In",
+    "logout": "Log Out",
+    "register": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "name": "Name",
+    "forgotPassword": "Forgot Password",
+    "autoLogin": "Remember Me",
+    "socialLogin": {
+      "kakao": "Continue with Kakao",
+      "naver": "Continue with Naver",
+      "apple": "Continue with Apple"
+    },
+    "errors": {
+      "invalidEmail": "Please enter a valid email address",
+      "invalidPassword": "Password must be at least 8 characters",
+      "passwordMismatch": "Passwords do not match",
+      "emailExists": "This email is already registered",
+      "invalidCredentials": "Invalid email or password"
+    },
+    "terms": {
+      "agreeAll": "Agree to All",
+      "termsOfService": "Terms of Service",
+      "privacyPolicy": "Privacy Policy"
+    }
+  },
+  "onboarding": {
+    "skip": "Skip",
+    "getStarted": "Get Started",
+    "page1": {
+      "title": "Welcome",
+      "description": "Get started with our app"
+    }
+  },
+  "main": {
+    "tabs": {
+      "explore": "Explore",
+      "search": "Search",
+      "saved": "Saved",
+      "notifications": "Notifications",
+      "profile": "Profile"
+    }
+  }
+}
