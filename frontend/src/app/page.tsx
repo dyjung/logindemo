@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Home() {
   const router = useRouter();
@@ -50,7 +51,25 @@ export default function Home() {
   return (
     <>
       <h1>LoginDemo</h1>
-      <p><i>Welcome to NO CSS CLUB</i></p>
+      <pre>{`
+ __        __   _
+ \\ \\      / /__| | ___ ___  _ __ ___   ___
+  \\ \\ /\\ / / _ \\ |/ __/ _ \\| '_ \` _ \\ / _ \\
+   \\ V  V /  __/ | (_| (_) | | | | | |  __/
+    \\_/\\_/ \\___|_|\\___\\___/|_| |_| |_|\\___|
+
+        _          _   _  ___
+       | |_ ___   | \\ | |/ _ \\
+       | __/ _ \\  |  \\| | | | |
+       | || (_) | | |\\  | |_| |
+        \\__\\___/  |_| \\_|\\___/
+
+    ____ ____ ____    ____ _    _   _ ____
+   / ___/ ___/ ___|  / ___| |  | | | | __ )
+  | |   \\___ \\___ \\ | |   | |  | | | |  _ \\
+  | |___ ___) |__) || |___| |__| |_| | |_) |
+   \\____|____/____/  \\____|_____\\___/|____/
+      `}</pre>
       <hr />
 
       <h2>About</h2>
@@ -106,18 +125,18 @@ export default function Home() {
       </form>
 
       <p>
-        <a href="#">Forgot password?</a>
+        <Link href="/forgot-password">Forgot password?</Link>
         {' | '}
-        <a href="#">Sign up</a>
+        <Link href="/signup">Sign up</Link>
       </p>
 
       <hr />
 
       <h2>Social Login</h2>
       <ul>
-        <li><a href="#">Login with Kakao</a></li>
-        <li><a href="#">Login with Naver</a></li>
-        <li><a href="#">Login with Apple</a></li>
+        <li><Link href="/auth/kakao">Login with Kakao</Link></li>
+        <li><Link href="/auth/naver">Login with Naver</Link></li>
+        <li><Link href="/auth/apple">Login with Apple</Link></li>
       </ul>
 
       <hr />
