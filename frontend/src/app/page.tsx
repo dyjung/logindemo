@@ -32,9 +32,9 @@ export default function Home() {
           </label>
         </p>
         <p>
-          <button type="button" onClick={() => alert('Please use iOS/Android app for login.')}>
-            Login
-          </button>
+          <button type="submit">Login</button>
+          <br />
+          <small>(Please use iOS/Android app for actual login)</small>
         </p>
       </form>
 
