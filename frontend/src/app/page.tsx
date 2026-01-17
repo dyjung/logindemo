@@ -11,13 +11,15 @@ export default function Home() {
   const [health, setHealth] = useState<HealthStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [blink, setBlink] = useState(true);
+  const [visitorCount] = useState(Math.floor(Math.random() * 9000) + 1000);
 
-  // Production: 빈 문자열 (상대 경로 사용, Nginx가 프록시)
-  // Development: http://localhost:3000
   const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
   useEffect(() => {
     checkHealth();
+    const blinkInterval = setInterval(() => setBlink(b => !b), 500);
+    return () => clearInterval(blinkInterval);
   }, []);
 
   const checkHealth = async () => {
@@ -35,78 +37,371 @@ export default function Home() {
     }
   };
 
+  const asciiLogo = `
+    ██╗      ██████╗  ██████╗ ██╗███╗   ██╗
+    ██║     ██╔═══██╗██╔════╝ ██║████╗  ██║
+    ██║     ██║   ██║██║  ███╗██║██╔██╗ ██║
+    ██║     ██║   ██║██║   ██║██║██║╚██╗██║
+    ███████╗╚██████╔╝╚██████╔╝██║██║ ╚████║
+    ╚══════╝ ╚═════╝  ╚═════╝ ╚═╝╚═╝  ╚═══╝
+    ██████╗ ███████╗███╗   ███╗ ██████╗
+    ██╔══██╗██╔════╝████╗ ████║██╔═══██╗
+    ██║  ██║█████╗  ██╔████╔██║██║   ██║
+    ██║  ██║██╔══╝  ██║╚██╔╝██║██║   ██║
+    ██████╔╝███████╗██║ ╚═╝ ██║╚██████╔╝
+    ╚═════╝ ╚══════╝╚═╝     ╚═╝ ╚═════╝
+  `;
+
+  const asciiWelcome = `
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  ★ ☆ ★ ☆ ★   W E L C O M E   ★ ☆ ★ ☆ ★                      ║
+  ║                                                              ║
+  ║     ♣ 환 영 합 니 다 ♣                                       ║
+  ║                                                              ║
+  ║  ┌──────────────────────────────────────────────────────┐   ║
+  ║  │  본 서비스는 LoginDemo 입니다.                       │   ║
+  ║  │  Next.js + NestJS 기반으로 제작되었습니다.           │   ║
+  ║  └──────────────────────────────────────────────────────┘   ║
+  ╚══════════════════════════════════════════════════════════════╝
+  `;
+
+  const asciiCat = `
+    /\\_/\\
+   ( o.o )
+    > ^ <
+   /|   |\\
+  (_|   |_)
+  `;
+
+  const asciiComputer = `
+   .---.
+  /     \\
+  \\.@-@./
+  /\`\\_/\`\\
+ //  _  \\\\
+| \\     )|_
+/\`\\_\`>  <_/ \\
+\\__/'---'\\__/
+  `;
+
   return (
-    <main className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-8">
-      <div className="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">
-          LoginDemo
-        </h1>
-        <p className="text-gray-500 text-center mb-8">
-          Next.js + NestJS
-        </p>
+    <main
+      style={{
+        minHeight: '100vh',
+        backgroundColor: '#000080',
+        color: '#00FF00',
+        fontFamily: '"DungGeunMo", "Courier New", monospace',
+        padding: '20px',
+        overflow: 'auto',
+      }}
+    >
+      {/* 스타일 삽입 */}
+      <style jsx global>{`
+        @import url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2107@1.0/DungGeunMo.woff2');
+        @font-face {
+          font-family: 'DungGeunMo';
+          src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2107@1.0/DungGeunMo.woff2') format('woff2');
+          font-weight: normal;
+          font-style: normal;
+        }
+        body {
+          margin: 0;
+          padding: 0;
+        }
+        ::selection {
+          background: #FF00FF;
+          color: #FFFF00;
+        }
+        @keyframes rainbow {
+          0% { color: #FF0000; }
+          14% { color: #FF7F00; }
+          28% { color: #FFFF00; }
+          42% { color: #00FF00; }
+          57% { color: #0000FF; }
+          71% { color: #4B0082; }
+          85% { color: #9400D3; }
+          100% { color: #FF0000; }
+        }
+        @keyframes marquee {
+          0% { transform: translateX(100%); }
+          100% { transform: translateX(-100%); }
+        }
+      `}</style>
 
-        {/* API 상태 카드 */}
-        <div className="bg-gray-50 rounded-xl p-6 mb-6">
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">
-            API 서버 상태
-          </h2>
-
-          {loading ? (
-            <div className="flex items-center justify-center py-4">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-            </div>
-          ) : error ? (
-            <div className="bg-red-100 text-red-700 p-4 rounded-lg">
-              <p className="font-medium">연결 실패</p>
-              <p className="text-sm">{error}</p>
-            </div>
-          ) : health ? (
-            <div className="bg-green-100 text-green-700 p-4 rounded-lg">
-              <p className="font-medium flex items-center gap-2">
-                <span className="w-3 h-3 bg-green-500 rounded-full"></span>
-                {health.status === 'ok' ? '정상 작동' : health.status}
-              </p>
-              <p className="text-sm mt-1">
-                {new Date(health.timestamp).toLocaleString('ko-KR')}
-              </p>
-            </div>
-          ) : null}
-        </div>
-
-        {/* 새로고침 버튼 */}
-        <button
-          onClick={checkHealth}
-          disabled={loading}
-          className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 text-white font-medium py-3 px-4 rounded-xl transition-colors"
-        >
-          {loading ? '확인 중...' : '다시 확인'}
-        </button>
-
-        {/* API URL 표시 */}
-        <p className="text-xs text-gray-400 text-center mt-4">
-          API: {API_URL}
-        </p>
+      {/* 상단 마퀴 */}
+      <div style={{
+        backgroundColor: '#FF00FF',
+        color: '#FFFF00',
+        padding: '10px',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        marginBottom: '20px',
+      }}>
+        <span style={{
+          display: 'inline-block',
+          animation: 'marquee 15s linear infinite',
+        }}>
+          ★☆★☆ 환영합니다! LoginDemo에 오신 것을 환영합니다! ★☆★☆
+          NO CSS CLUB 회원 여러분 안녕하세요! ★☆★☆
+          1990년대 감성을 느껴보세요! ★☆★☆
+          방문자 여러분 감사합니다! ★☆★☆
+        </span>
       </div>
 
-      {/* 링크 */}
-      <div className="mt-8 flex gap-4 text-sm">
-        <a
-          href={`${API_URL}/api`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-500 hover:underline"
-        >
-          Swagger 문서
-        </a>
-        <span className="text-gray-300">|</span>
-        <a
-          href="https://github.com/dyjung/logindemo-backend"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-500 hover:underline"
-        >
-          GitHub
-        </a>
+      {/* ASCII 로고 */}
+      <pre style={{
+        color: '#00FFFF',
+        textAlign: 'center',
+        fontSize: '10px',
+        lineHeight: '1.1',
+        textShadow: '0 0 10px #00FFFF',
+      }}>
+        {asciiLogo}
+      </pre>
+
+      {/* 환영 박스 */}
+      <pre style={{
+        color: '#FFFF00',
+        textAlign: 'center',
+        fontSize: '12px',
+        marginTop: '20px',
+      }}>
+        {asciiWelcome}
+      </pre>
+
+      {/* 방문자 카운터 */}
+      <div style={{
+        textAlign: 'center',
+        margin: '20px 0',
+        color: '#FF00FF',
+      }}>
+        <span style={{ fontSize: '20px' }}>📟 </span>
+        <span style={{
+          backgroundColor: '#000000',
+          border: '3px ridge #808080',
+          padding: '5px 15px',
+          color: '#FF0000',
+          fontWeight: 'bold',
+        }}>
+          VISITOR: {visitorCount.toString().padStart(6, '0')}
+        </span>
+        <span style={{ fontSize: '20px' }}> 📟</span>
+      </div>
+
+      {/* 중앙 컨텐츠 */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '40px',
+        flexWrap: 'wrap',
+        margin: '30px 0',
+      }}>
+        {/* 왼쪽 ASCII 아트 */}
+        <pre style={{
+          color: '#FF6600',
+          fontSize: '14px',
+          textShadow: '0 0 5px #FF6600',
+        }}>
+          {asciiCat}
+        </pre>
+
+        {/* API 상태 박스 */}
+        <div style={{
+          border: '3px double #00FF00',
+          padding: '20px',
+          minWidth: '300px',
+        }}>
+          <div style={{
+            color: '#FFFF00',
+            textAlign: 'center',
+            marginBottom: '15px',
+            fontSize: '18px',
+          }}>
+            ═══ API 서버 상태 ═══
+          </div>
+
+          {loading ? (
+            <div style={{ color: '#FFFF00', textAlign: 'center' }}>
+              {blink ? '▓▓▓ 로딩중... ▓▓▓' : '░░░ 로딩중... ░░░'}
+            </div>
+          ) : error ? (
+            <div style={{
+              color: '#FF0000',
+              textAlign: 'center',
+              border: '1px solid #FF0000',
+              padding: '10px',
+            }}>
+              ╔═══════════════════╗<br/>
+              ║  ✖ 연결 실패 ✖   ║<br/>
+              ╚═══════════════════╝<br/>
+              {error}
+            </div>
+          ) : health ? (
+            <div style={{ textAlign: 'center' }}>
+              <div style={{
+                color: '#00FF00',
+                animation: 'rainbow 3s linear infinite',
+                fontSize: '16px',
+              }}>
+                ╔═══════════════════╗<br/>
+                ║  ✔ 정상 작동 ✔   ║<br/>
+                ╚═══════════════════╝
+              </div>
+              <div style={{ color: '#00FFFF', marginTop: '10px' }}>
+                ⏰ {new Date(health.timestamp).toLocaleString('ko-KR')}
+              </div>
+            </div>
+          ) : null}
+
+          {/* 새로고침 버튼 */}
+          <button
+            onClick={checkHealth}
+            disabled={loading}
+            style={{
+              marginTop: '15px',
+              width: '100%',
+              padding: '10px',
+              backgroundColor: '#000000',
+              color: '#00FF00',
+              border: '2px outset #00FF00',
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+              fontSize: '14px',
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = '#003300';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = '#000000';
+            }}
+          >
+            [ 다시 확인 ]
+          </button>
+        </div>
+
+        {/* 오른쪽 ASCII 아트 */}
+        <pre style={{
+          color: '#FF00FF',
+          fontSize: '12px',
+          textShadow: '0 0 5px #FF00FF',
+        }}>
+          {asciiComputer}
+        </pre>
+      </div>
+
+      {/* 메뉴 */}
+      <div style={{
+        textAlign: 'center',
+        margin: '30px 0',
+        color: '#00FFFF',
+      }}>
+        <div style={{ marginBottom: '10px' }}>
+          ╔═══════════════════════════════════════╗
+        </div>
+        <div>║
+          <a href={`${API_URL}/api-docs`} target="_blank" rel="noopener noreferrer"
+            style={{ color: '#FFFF00', textDecoration: 'none', margin: '0 10px' }}>
+            [1] Swagger 문서
+          </a>
+          |
+          <a href="https://github.com/dyjung/logindemo" target="_blank" rel="noopener noreferrer"
+            style={{ color: '#FFFF00', textDecoration: 'none', margin: '0 10px' }}>
+            [2] GitHub
+          </a>
+          ║
+        </div>
+        <div style={{ marginTop: '10px' }}>
+          ╚═══════════════════════════════════════╝
+        </div>
+      </div>
+
+      {/* 구분선 */}
+      <div style={{
+        textAlign: 'center',
+        color: '#FF00FF',
+        margin: '20px 0',
+      }}>
+        ★·.·´¯`·.·★ ═══════════════════════════════════ ★·.·´¯`·.·★
+      </div>
+
+      {/* 긴급연락처 */}
+      <div style={{
+        textAlign: 'center',
+        color: '#FF0000',
+        fontSize: '18px',
+        border: '2px dashed #FF0000',
+        padding: '15px',
+        margin: '20px auto',
+        maxWidth: '400px',
+        backgroundColor: '#330000',
+      }}>
+        <div style={{ color: '#FFFF00', marginBottom: '5px' }}>
+          ☎ 긴급연락처 ☎
+        </div>
+        <div style={{
+          color: blink ? '#FF0000' : '#FFFF00',
+          fontWeight: 'bold',
+        }}>
+          양부장: 010-2623-5585
+        </div>
+      </div>
+
+      {/* 하단 정보 */}
+      <div style={{
+        textAlign: 'center',
+        marginTop: '40px',
+        color: '#808080',
+        fontSize: '12px',
+      }}>
+        <div>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
+        <div style={{ margin: '10px 0' }}>
+          © 2026 LoginDemo. All Rights Reserved.
+        </div>
+        <div>
+          Made with ♥ by DY Jung | NO CSS CLUB 회원번호 #0001
+        </div>
+        <div style={{ marginTop: '10px', color: '#00FF00' }}>
+          Best viewed with Netscape Navigator 4.0 @ 800x600
+        </div>
+        <div>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
+      </div>
+
+      {/* 하단 ASCII 아트 */}
+      <pre style={{
+        textAlign: 'center',
+        color: '#00FF00',
+        fontSize: '10px',
+        marginTop: '20px',
+      }}>
+{`
+   _____                      _   _
+  / ____|                    | | (_)
+ | |      ___  _ __  _ __   ___  ___| |_ _  ___  _ __
+ | |     / _ \\| '_ \\| '_ \\ / _ \\/ __| __| |/ _ \\| '_ \\
+ | |____| (_) | | | | | | |  __/ (__| |_| | (_) | | | |
+  \\_____|\\___/|_| |_|_| |_|\\___|\\___|\\__|_|\\___/|_| |_|
+
+`}
+      </pre>
+
+      {/* GIF 느낌의 움직이는 요소들 */}
+      <div style={{
+        position: 'fixed',
+        bottom: '20px',
+        right: '20px',
+        fontSize: '30px',
+        animation: 'rainbow 2s linear infinite',
+      }}>
+        {blink ? '🌟' : '✨'}
+      </div>
+
+      <div style={{
+        position: 'fixed',
+        bottom: '20px',
+        left: '20px',
+        fontSize: '30px',
+      }}>
+        {blink ? '🚧' : '⚠️'} Under Construction {blink ? '⚠️' : '🚧'}
       </div>
     </main>
   );
