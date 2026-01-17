@@ -19,7 +19,7 @@ export default function Home() {
   };
 
   return (
-    <body style={{
+    <div style={{
       margin: 0,
       padding: '20px',
       backgroundColor: '#000080',
@@ -29,21 +29,21 @@ export default function Home() {
     }}>
       {/* 상단 타이틀 */}
       <center>
-        <font color="#FFFF00" size={6}>
-          <b>★ LoginDemo ★</b>
-        </font>
+        <span style={{ color: '#FFFF00', fontSize: '32px', fontWeight: 'bold' }}>
+          ★ LoginDemo ★
+        </span>
         <br />
-        <font color="#00FFFF" size={3}>
+        <span style={{ color: '#00FFFF', fontSize: '18px' }}>
           Welcome to NO CSS CLUB
-        </font>
-        <hr color="#FF00FF" />
+        </span>
+        <hr style={{ borderColor: '#FF00FF' }} />
       </center>
 
       {/* 방문자 카운터 */}
       <center>
-        <font color="#FF00FF">
-          방문자: <font color="#FF0000"><b>{visitorCount.toString().padStart(6, '0')}</b></font>
-        </font>
+        <span style={{ color: '#FF00FF' }}>
+          방문자: <span style={{ color: '#FF0000', fontWeight: 'bold' }}>{visitorCount.toString().padStart(6, '0')}</span>
+        </span>
       </center>
 
       <br />
@@ -57,35 +57,34 @@ export default function Home() {
           <tbody>
             <tr>
               <td colSpan={2} align="center">
-                <font color="#00FFFF" size={5}>
-                  <pre>{`
-   _____
+                <span style={{ color: '#00FFFF', fontSize: '24px' }}>
+                  <pre style={{ margin: 0 }}>{`   _____
   /     \\
  | () () |
   \\  ^  /
    |||||
-   |||||
-                  `}</pre>
-                </font>
-                <font color="#FFFF00" size={4}>
-                  <b>환영합니다</b>
-                </font>
+   |||||`}</pre>
+                </span>
                 <br />
-                <font color="#808080">
+                <span style={{ color: '#FFFF00', fontSize: '22px', fontWeight: 'bold' }}>
+                  환영합니다
+                </span>
+                <br />
+                <span style={{ color: '#808080' }}>
                   계정에 로그인하세요
-                </font>
+                </span>
               </td>
             </tr>
 
             <tr>
               <td colSpan={2}>
-                <hr color="#00FF00" />
+                <hr style={{ borderColor: '#00FF00' }} />
               </td>
             </tr>
 
             <tr>
               <td align="right">
-                <font color="#00FF00">이메일:</font>
+                <span style={{ color: '#00FF00' }}>이메일:</span>
               </td>
               <td>
                 <input
@@ -107,7 +106,7 @@ export default function Home() {
 
             <tr>
               <td align="right">
-                <font color="#00FF00">비밀번호:</font>
+                <span style={{ color: '#00FF00' }}>비밀번호:</span>
               </td>
               <td>
                 <input
@@ -149,21 +148,21 @@ export default function Home() {
 
             <tr>
               <td colSpan={2} align="center">
-                <font color="#808080" size={2}>
+                <span style={{ color: '#808080', fontSize: '12px' }}>
                   <a href="#" style={{ color: '#00FFFF' }}>비밀번호를 잊으셨나요?</a>
-                </font>
+                </span>
               </td>
             </tr>
 
             <tr>
               <td colSpan={2}>
-                <hr color="#808080" />
+                <hr style={{ borderColor: '#808080' }} />
               </td>
             </tr>
 
             <tr>
               <td colSpan={2} align="center">
-                <font color="#808080">── 또는 ──</font>
+                <span style={{ color: '#808080' }}>── 또는 ──</span>
               </td>
             </tr>
 
@@ -220,7 +219,7 @@ export default function Home() {
             <tr>
               <td colSpan={2} align="center">
                 <br />
-                <font color="#808080">계정이 없으신가요? </font>
+                <span style={{ color: '#808080' }}>계정이 없으신가요? </span>
                 <a href="#" style={{ color: '#FFFF00' }}>회원가입</a>
               </td>
             </tr>
@@ -229,7 +228,7 @@ export default function Home() {
       </center>
 
       <br />
-      <hr color="#FF00FF" />
+      <hr style={{ borderColor: '#FF00FF' }} />
 
       {/* 긴급연락처 */}
       <center>
@@ -237,11 +236,11 @@ export default function Home() {
           <tbody>
             <tr>
               <td align="center">
-                <font color="#FFFF00">☎ 긴급연락처 ☎</font>
+                <span style={{ color: '#FFFF00' }}>☎ 긴급연락처 ☎</span>
                 <br />
-                <font color={blink ? '#FF0000' : '#FFFF00'}>
-                  <b>양부장: 010-2623-5585</b>
-                </font>
+                <span style={{ color: blink ? '#FF0000' : '#FFFF00', fontWeight: 'bold' }}>
+                  양부장: 010-2623-5585
+                </span>
               </td>
             </tr>
           </tbody>
@@ -252,17 +251,17 @@ export default function Home() {
 
       {/* 하단 정보 */}
       <center>
-        <hr color="#808080" />
-        <font color="#808080" size={2}>
+        <hr style={{ borderColor: '#808080' }} />
+        <span style={{ color: '#808080', fontSize: '12px' }}>
           © 2026 LoginDemo | NO CSS CLUB #0001
           <br />
           Best viewed with Netscape Navigator 4.0 @ 800x600
-        </font>
+        </span>
         <br /><br />
-        <font color="#00FF00" size={2}>
+        <span style={{ color: '#00FF00', fontSize: '12px' }}>
           {blink ? '🚧' : '⚠️'} Under Construction {blink ? '⚠️' : '🚧'}
-        </font>
+        </span>
       </center>
-    </body>
+    </div>
   );
 }
