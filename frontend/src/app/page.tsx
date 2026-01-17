@@ -1,4 +1,52 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
 export default function Home() {
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const res = await fetch('/v1/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          provider: 'EMAIL',
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        // 로그인 성공 - 토큰 저장 (간단히 localStorage 사용)
+        if (data.accessToken) {
+          localStorage.setItem('accessToken', data.accessToken);
+        }
+        // /main 페이지로 이동
+        router.push('/main');
+      } else {
+        const errorData = await res.json();
+        setError(errorData.message || 'Login failed. Please check your credentials.');
+      }
+    } catch {
+      setError('Network error. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <h1>LoginDemo</h1>
@@ -15,15 +63,29 @@ export default function Home() {
       <hr />
 
       <h2>Login</h2>
-      <form>
+      <form onSubmit={handleLogin}>
         <p>
           <label>
-            Email: <input type="email" name="email" placeholder="user@example.com" />
+            Email: <input
+              type="email"
+              name="email"
+              placeholder="user@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </label>
         </p>
         <p>
           <label>
-            Password: <input type="password" name="password" placeholder="********" />
+            Password: <input
+              type="password"
+              name="password"
+              placeholder="********"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </label>
         </p>
         <p>
@@ -31,10 +93,15 @@ export default function Home() {
             <input type="checkbox" name="remember" /> Remember me
           </label>
         </p>
+        {error && (
+          <p>
+            <b>Error:</b> {error}
+          </p>
+        )}
         <p>
-          <button type="submit">Login</button>
-          <br />
-          <small>(Please use iOS/Android app for actual login)</small>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
         </p>
       </form>
 
