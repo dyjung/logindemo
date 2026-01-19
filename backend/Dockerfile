@@ -56,3 +56,5 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 
 # Start command
 CMD ["sh", "-c", "npx prisma db push --skip-generate && node dist/main"]
+(base) doyoungchung@Doyoungui-Macmini ~ % curl https://72.62.245.151:3000/init 
+curl: (35) OpenSSL/3.0.15: error:0A00010B:SSL routines::wrong version number

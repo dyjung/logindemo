@@ -1,0 +1,458 @@
+openapi: 3.0.3
+info:
+  title: LoginDemo 인증 API
+  description: 인증 및 온보딩 플로우를 위한 REST API 명세
+  version: 1.0.0
+  contact:
+    name: LoginDemo Team
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+  - url: https://api-dev.example.com/v1
+    description: Development server
+
+tags:
+  - name: Auth
+    description: 인증 관련 엔드포인트
+  - name: User
+    description: 사용자 관련 엔드포인트
+
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: 이메일/비밀번호 로그인
+      description: 이메일과 비밀번호로 로그인하고 인증 토큰을 발급받습니다.
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: 로그인 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: 입력값 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: 인증 실패 (잘못된 이메일 또는 비밀번호)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: 요청 제한 초과
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: 회원가입
+      description: 새로운 계정을 생성하고 자동으로 로그인합니다.
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: 회원가입 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: 입력값 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: 이메일 중복
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/oauth/kakao:
+    post:
+      tags:
+        - Auth
+      summary: 카카오 소셜 로그인
+      description: 카카오 OAuth 토큰으로 로그인합니다.
+      operationId: kakaoLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SocialLoginRequest'
+      responses:
+        '200':
+          description: 로그인 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: OAuth 토큰 유효하지 않음
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/oauth/naver:
+    post:
+      tags:
+        - Auth
+      summary: 네이버 소셜 로그인
+      description: 네이버 OAuth 토큰으로 로그인합니다.
+      operationId: naverLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SocialLoginRequest'
+      responses:
+        '200':
+          description: 로그인 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: OAuth 토큰 유효하지 않음
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/oauth/apple:
+    post:
+      tags:
+        - Auth
+      summary: Apple 소셜 로그인
+      description: Apple identityToken으로 로그인합니다.
+      operationId: appleLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SocialLoginRequest'
+      responses:
+        '200':
+          description: 로그인 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: identityToken 유효하지 않음
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/refresh:
+    post:
+      tags:
+        - Auth
+      summary: 토큰 갱신
+      description: Refresh Token으로 새로운 Access Token을 발급받습니다.
+      operationId: refreshToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenRequest'
+      responses:
+        '200':
+          description: 토큰 갱신 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Refresh Token 유효하지 않거나 만료됨
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: 로그아웃
+      description: 현재 세션을 종료하고 Refresh Token을 무효화합니다.
+      operationId: logout
+      security:
+        - bearerAuth: []
+      responses:
+        '204':
+          description: 로그아웃 성공
+        '401':
+          description: 인증 필요
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/check-email:
+    get:
+      tags:
+        - Auth
+      summary: 이메일 중복 확인
+      description: 이메일 주소의 사용 가능 여부를 확인합니다.
+      operationId: checkEmail
+      parameters:
+        - name: email
+          in: query
+          required: true
+          description: 확인할 이메일 주소
+          schema:
+            type: string
+            format: email
+      responses:
+        '200':
+          description: 확인 완료
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailCheckResponse'
+        '400':
+          description: 이메일 형식 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/forgot-password:
+    post:
+      tags:
+        - Auth
+      summary: 비밀번호 재설정 요청
+      description: 비밀번호 재설정 이메일을 발송합니다.
+      operationId: forgotPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPasswordRequest'
+      responses:
+        '200':
+          description: 이메일 발송 완료 (보안상 항상 성공 응답)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+
+  /users/me:
+    get:
+      tags:
+        - User
+      summary: 현재 사용자 정보 조회
+      description: 로그인한 사용자의 정보를 조회합니다.
+      operationId: getCurrentUser
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: 조회 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '401':
+          description: 인증 필요
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Access Token
+
+  schemas:
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        password:
+          type: string
+          format: password
+          minLength: 8
+          example: password123
+        autoLogin:
+          type: boolean
+          default: false
+          description: 자동로그인 활성화 여부
+
+    RegisterRequest:
+      type: object
+      required:
+        - email
+        - password
+        - name
+        - agreedToTerms
+        - agreedToPrivacy
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        password:
+          type: string
+          format: password
+          minLength: 8
+          example: password123
+        name:
+          type: string
+          minLength: 1
+          example: 홍길동
+        agreedToTerms:
+          type: boolean
+          description: 이용약관 동의
+        agreedToPrivacy:
+          type: boolean
+          description: 개인정보처리방침 동의
+
+    SocialLoginRequest:
+      type: object
+      required:
+        - oauthToken
+      properties:
+        oauthToken:
+          type: string
+          description: 소셜 로그인 제공자로부터 받은 토큰
+        autoLogin:
+          type: boolean
+          default: false
+          description: 자동로그인 활성화 여부
+
+    RefreshTokenRequest:
+      type: object
+      required:
+        - refreshToken
+      properties:
+        refreshToken:
+          type: string
+          description: Refresh Token
+
+    ForgotPasswordRequest:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+
+    AuthResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: Access Token (JWT)
+        refreshToken:
+          type: string
+          description: Refresh Token
+        expiresIn:
+          type: integer
+          description: Access Token 만료 시간 (초)
+          example: 3600
+        tokenType:
+          type: string
+          example: Bearer
+        user:
+          $ref: '#/components/schemas/UserResponse'
+
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 사용자 고유 ID
+          example: usr_123456
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        name:
+          type: string
+          example: 홍길동
+        provider:
+          type: string
+          enum: [email, kakao, naver, apple]
+          nullable: true
+          description: 인증 제공자
+        createdAt:
+          type: string
+          format: date-time
+          description: 계정 생성 일시
+
+    EmailCheckResponse:
+      type: object
+      properties:
+        available:
+          type: boolean
+          description: 이메일 사용 가능 여부
+
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 비밀번호 재설정 이메일이 발송되었습니다.
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: 에러 코드
+          example: 401
+        message:
+          type: string
+          description: 에러 메시지
+          example: 이메일 또는 비밀번호가 올바르지 않습니다.
+        details:
+          type: object
+          additionalProperties:
+            type: string
+          description: 필드별 상세 에러
+          example:
+            email: 올바른 이메일 형식이 아닙니다.

@@ -2,16 +2,23 @@
 //  LoginDemoApp.swift
 //  LoginDemo
 //
-//  Created by Doyoung Chung on 1/6/26.
+//  앱 진입점
 //
 
 import SwiftUI
 
 @main
 struct LoginDemoApp: App {
+    // MARK: - Properties
+
+    @State private var appState = AppState()
+    private let container = DIContainer.shared
+
+    // MARK: - Body
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView(appState: appState, container: container)
         }
     }
 }

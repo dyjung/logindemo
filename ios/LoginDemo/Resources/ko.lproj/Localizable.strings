@@ -1,0 +1,41 @@
+/* 
+  Localizable.strings (Korean)
+  LoginDemo
+  
+  한국어 문자열 리소스
+*/
+
+// MARK: - Error Messages
+
+"error.invalid_email" = "올바른 이메일 형식이 아닙니다";
+"error.invalid_password" = "비밀번호는 8자 이상이어야 합니다";
+"error.password_mismatch" = "비밀번호가 일치하지 않습니다";
+"error.invalid_name" = "이름을 입력해주세요";
+"error.email_already_exists" = "이미 사용 중인 이메일입니다";
+
+// MARK: - Auth
+
+"auth.login" = "로그인";
+"auth.register" = "회원가입";
+"auth.logout" = "로그아웃";
+"auth.email" = "이메일";
+"auth.password" = "비밀번호";
+"auth.password_confirm" = "비밀번호 확인";
+"auth.name" = "이름";
+"auth.auto_login" = "자동 로그인";
+"auth.forgot_password" = "비밀번호를 잊으셨나요?";
+"auth.no_account" = "계정이 없으신가요?";
+"auth.have_account" = "이미 계정이 있으신가요?";
+
+// MARK: - Onboarding
+
+"onboarding.skip" = "건너뛰기";
+"onboarding.start" = "시작하기";
+"onboarding.next" = "다음";
+
+// MARK: - Common
+
+"common.ok" = "확인";
+"common.cancel" = "취소";
+"common.retry" = "재시도";
+"common.loading" = "로딩 중...";

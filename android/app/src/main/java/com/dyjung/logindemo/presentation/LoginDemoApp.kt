@@ -1,32 +1,42 @@
 package com.dyjung.logindemo.presentation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.dyjung.logindemo.presentation.auth.ForgotPasswordScreen
 import com.dyjung.logindemo.presentation.auth.LoginScreen
+import com.dyjung.logindemo.presentation.auth.RegisterScreen
 import com.dyjung.logindemo.presentation.main.MainScreen
 import com.dyjung.logindemo.presentation.onboarding.OnboardingScreen
 import com.dyjung.logindemo.presentation.splash.SplashScreen
 
 /**
- * Root composable for the app.
- * Handles navigation based on app state.
+ * 앱 네비게이션 목적지
+ * iOS의 AppScreen에 대응
+ */
+sealed class AppScreen(val route: String) {
+    data object Splash : AppScreen("splash")
+    data object Onboarding : AppScreen("onboarding")
+    data object Login : AppScreen("login")
+    data object Register : AppScreen("register")
+    data object ForgotPassword : AppScreen("forgot_password")
+    data object Main : AppScreen("main")
+}
+
+/**
+ * 앱의 루트 Composable
+ * iOS의 RootView에 대응
  */
 @Composable
-fun LoginDemoApp(
-    viewModel: AppViewModel = hiltViewModel()
-) {
-    val uiState by viewModel.uiState.collectAsState()
+fun LoginDemoApp() {
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
         startDestination = AppScreen.Splash.route
     ) {
+        // 스플래시 화면
         composable(AppScreen.Splash.route) {
             SplashScreen(
                 onNavigateToOnboarding = {
@@ -47,6 +57,7 @@ fun LoginDemoApp(
             )
         }
 
+        // 온보딩 화면
         composable(AppScreen.Onboarding.route) {
             OnboardingScreen(
                 onComplete = {
@@ -57,6 +68,7 @@ fun LoginDemoApp(
             )
         }
 
+        // 로그인 화면
         composable(AppScreen.Login.route) {
             LoginScreen(
                 onLoginSuccess = {
@@ -65,11 +77,44 @@ fun LoginDemoApp(
                     }
                 },
                 onNavigateToRegister = {
-                    // TODO: Navigate to register
+                    navController.navigate(AppScreen.Register.route)
+                },
+                onNavigateToForgotPassword = {
+                    navController.navigate(AppScreen.ForgotPassword.route)
+                },
+                onNavigateToMain = {
+                    // 개발용 메인 바로가기 (로그인 건너뛰기)
+                    navController.navigate(AppScreen.Main.route) {
+                        popUpTo(AppScreen.Login.route) { inclusive = true }
+                    }
                 }
             )
         }
 
+        // 회원가입 화면
+        composable(AppScreen.Register.route) {
+            RegisterScreen(
+                onRegisterSuccess = {
+                    navController.navigate(AppScreen.Main.route) {
+                        popUpTo(AppScreen.Login.route) { inclusive = true }
+                    }
+                },
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        // 비밀번호 찾기 화면
+        composable(AppScreen.ForgotPassword.route) {
+            ForgotPasswordScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        // 메인 화면
         composable(AppScreen.Main.route) {
             MainScreen(
                 onLogout = {
@@ -80,14 +125,4 @@ fun LoginDemoApp(
             )
         }
     }
-}
-
-/**
- * App navigation destinations.
- */
-sealed class AppScreen(val route: String) {
-    data object Splash : AppScreen("splash")
-    data object Onboarding : AppScreen("onboarding")
-    data object Login : AppScreen("login")
-    data object Main : AppScreen("main")
 }

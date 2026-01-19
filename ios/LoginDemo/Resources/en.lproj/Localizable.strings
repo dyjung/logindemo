@@ -1,0 +1,41 @@
+/* 
+  Localizable.strings (English)
+  LoginDemo
+  
+  English string resources
+*/
+
+// MARK: - Error Messages
+
+"error.invalid_email" = "Invalid email format";
+"error.invalid_password" = "Password must be at least 8 characters";
+"error.password_mismatch" = "Passwords do not match";
+"error.invalid_name" = "Please enter your name";
+"error.email_already_exists" = "Email is already in use";
+
+// MARK: - Auth
+
+"auth.login" = "Login";
+"auth.register" = "Sign Up";
+"auth.logout" = "Logout";
+"auth.email" = "Email";
+"auth.password" = "Password";
+"auth.password_confirm" = "Confirm Password";
+"auth.name" = "Name";
+"auth.auto_login" = "Auto Login";
+"auth.forgot_password" = "Forgot your password?";
+"auth.no_account" = "Don't have an account?";
+"auth.have_account" = "Already have an account?";
+
+// MARK: - Onboarding
+
+"onboarding.skip" = "Skip";
+"onboarding.start" = "Get Started";
+"onboarding.next" = "Next";
+
+// MARK: - Common
+
+"common.ok" = "OK";
+"common.cancel" = "Cancel";
+"common.retry" = "Retry";
+"common.loading" = "Loading...";

@@ -15,6 +15,13 @@ LoginDemo/
 ├── android/                # Android project (Jetpack Compose)
 │   ├── app/
 │   └── build.gradle.kts
+├── backend/                # Backend server (NestJS + Prisma)
+│   ├── src/                # Source code
+│   ├── prisma/             # Database schema & migrations
+│   └── package.json
+├── typespec/               # API specification (TypeSpec)
+│   ├── main.tsp            # API contract definition
+│   └── tsp-output/         # Generated OpenAPI specs
 ├── shared/                 # Shared resources
 │   ├── assets/             # Shared images, icons
 │   ├── api-contracts/      # OpenAPI specs
@@ -43,6 +50,15 @@ make ios-release        # Build iOS release
 make android-build      # Build Android debug
 make android-test       # Run Android tests
 make android-release    # Build Android release
+
+# Backend
+cd backend && npm install   # Install dependencies
+cd backend && npm run start:dev  # Run dev server
+cd backend && npm run build      # Build for production
+
+# TypeSpec
+cd typespec && npm install  # Install dependencies
+cd typespec && npx tsp compile main.tsp  # Generate OpenAPI spec
 
 # Setup
 make setup              # Check environment
@@ -188,6 +204,17 @@ Both platforms generate client code from these specs.
 - **UI Framework**: Jetpack Compose
 - **Concurrency**: Coroutines + Flow
 - **Package**: com.dyjung.logindemo
+
+### Backend
+- **Framework**: NestJS
+- **ORM**: Prisma
+- **Language**: TypeScript
+- **Database**: PostgreSQL (configurable)
+
+### TypeSpec (API Contract)
+- **Purpose**: API specification & OpenAPI generation
+- **Output**: `typespec/tsp-output/schema/openapi.yaml`
+- **Relationship**: Backend implements the API contract defined here
 
 ## Active Technologies
 - Swift 5.9+ + SwiftUI, Foundation

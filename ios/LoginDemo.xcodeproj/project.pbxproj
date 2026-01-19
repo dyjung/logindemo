@@ -6,13 +6,30 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		DD53E5002F0D200000E63818 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = DD53E4FF2F0D200000E63818 /* Alamofire */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		DD53E4E72F0D154200E63818 /* LoginDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoginDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		DD908B572F1A1339004E4508 /* Exceptions for "LoginDemo" folder in "LoginDemo" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = DD53E4E62F0D154200E63818 /* LoginDemo */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DD53E4E92F0D154200E63818 /* LoginDemo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DD908B572F1A1339004E4508 /* Exceptions for "LoginDemo" folder in "LoginDemo" target */,
+			);
 			path = LoginDemo;
 			sourceTree = "<group>";
 		};
@@ -23,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD53E5002F0D200000E63818 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +83,7 @@
 			);
 			name = LoginDemo;
 			packageProductDependencies = (
+				DD53E4FF2F0D200000E63818 /* Alamofire */,
 			);
 			productName = LoginDemo;
 			productReference = DD53E4E72F0D154200E63818 /* LoginDemo.app */;
@@ -91,9 +110,13 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = DD53E4DE2F0D154200E63818;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				DD53E4FE2F0D200000E63818 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = DD53E4E82F0D154200E63818 /* Products */;
 			projectDirPath = "";
@@ -178,7 +201,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -236,7 +259,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -256,6 +279,9 @@
 				DEVELOPMENT_TEAM = ER4F6H52VA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LoginDemo/Info.plist;
+				INFOPLIST_KEY_CFBundleURLTypes = "$(SOCIAL_LOGIN_URL_TYPES)";
+				INFOPLIST_KEY_LSApplicationQueriesSchemes = "kakaokompassauth kakaolink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -288,6 +314,9 @@
 				DEVELOPMENT_TEAM = ER4F6H52VA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LoginDemo/Info.plist;
+				INFOPLIST_KEY_CFBundleURLTypes = "$(SOCIAL_LOGIN_URL_TYPES)";
+				INFOPLIST_KEY_LSApplicationQueriesSchemes = "kakaokompassauth kakaolink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -332,6 +361,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DD53E4FE2F0D200000E63818 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DD53E4FF2F0D200000E63818 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DD53E4FE2F0D200000E63818 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DD53E4DF2F0D154200E63818 /* Project object */;
 }

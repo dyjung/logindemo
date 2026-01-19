@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function MainPage() {
   const router = useRouter();
@@ -39,10 +40,10 @@ export default function MainPage() {
 
       <h2>Navigation</h2>
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Profile</a></li>
-        <li><a href="#">Settings</a></li>
-        <li><a href="#">Explore</a></li>
+        <li><Link href="/main">Home</Link></li>
+        <li><Link href="/main/profile">Profile</Link></li>
+        <li><Link href="/main/settings">Settings</Link></li>
+        <li><Link href="/main/explore">Explore</Link></li>
       </ul>
 
       <hr />
